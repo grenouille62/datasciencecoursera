@@ -25,7 +25,7 @@ readCompleteDataFrame <- function(directory, iMonitor) {
   dfReturn
 }
 
-# Part 1
+# Part 1 
 # Main function : computing weighted accross monitors specified in id argument
 # algo : as we cannot load all 332 file in memory, we compute mean value file by file and
 # compute final mean of all these means.
@@ -80,9 +80,16 @@ complete <- function(directory, id = 1:332){
 
 #Part 3
 corr <- function(directory, threshold = 0) {
+  # reuse Part 2 function "complete" to get the list of monitors with their number of complete observations
   dfComplete <- complete(directory)
+  
+  # extract the list of monitors which have number of observations > threshold
   dfCompleteThreshold <- dfComplete[dfComplete[,"nobs"] > threshold,]
+  
+  #Init an emty numeric vector
   correlations <- as.numeric(NULL)
+  
+  # Compute correlation vector 
   if (nrow(dfCompleteThreshold) > 0) {
     for (i in 1:nrow(dfCompleteThreshold)) {
       idMonitor = dfCompleteThreshold[i,"id"]
