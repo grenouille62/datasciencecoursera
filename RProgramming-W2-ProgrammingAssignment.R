@@ -42,8 +42,10 @@ pollutantmean <- function(directory, pollutant, id = 1:332) {
     #Compute mean of each monitor
     for (i in id) {
       dfI <- readDataFrame(directory, pollutant, i)
+      if (length(dfI) > 0) {
       means[i] <- mean (dfI)
       weightByMonitor[i] <- length(dfI)
+      }
     }
     #finally, compute weightedmean of means
     result <- weighted.mean(means[!is.na(means)], weightByMonitor[!is.na(weightByMonitor)])
